@@ -61,7 +61,7 @@
             <div class="flex items-center gap-2">
                 <div class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg text-sm font-bold border border-emerald-100 flex flex-col items-center leading-none shadow-sm" id="table-badge">
                     <span class="text-[10px] font-normal text-emerald-600 mb-0.5">หมายเลขโต๊ะ</span>
-                    <span id="table-number-text">01</span>
+                    <span id="table-number-text">03</span>
                 </div>
                 <button onclick="requestBill(event)" class="bg-slate-800 text-white px-3 py-2 rounded-lg text-[13px] font-bold hover:bg-slate-700 transition-colors flex items-center gap-1.5 shadow-sm">
                     <i class="fas fa-file-invoice-dollar text-emerald-400"></i> เช็คบิล
@@ -823,6 +823,7 @@
             try {
                 await addDoc(collection(db, "table_calls"), {
                     table: TABLE_NUMBER,
+                    type: 'call',
                     timestamp: serverTimestamp()
                 });
                 window.showCustomAlert(`พนักงานได้รับแจ้งเตือนจาก โต๊ะ ${TABLE_NUMBER} แล้ว กรุณารอสักครู่ครับ`, 'info');
@@ -841,7 +842,8 @@
             btn.disabled = true;
             try {
                 await addDoc(collection(db, "table_calls"), {
-                    table: TABLE_NUMBER + " (เรียกเช็คบิล)",
+                    table: TABLE_NUMBER,
+                    type: 'checkbill',
                     timestamp: serverTimestamp()
                 });
                 window.showCustomAlert(`รับทราบ! แคชเชียร์ได้รับการแจ้งเตือนของ โต๊ะ ${TABLE_NUMBER} เพื่อตรวจสอบและนำบิลมาให้แล้วครับ`, 'success');
